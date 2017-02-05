@@ -22,7 +22,7 @@ double isFunction(double x) {
 }
 
 //bisection method
-double biseccion(double x0, double x1) {
+double bisection(double x0, double x1) {
     double y0 = isFunction(x0); //Evaluating values in function
     double y1 = isFunction(x1);
 
@@ -62,6 +62,6 @@ double biseccion(double x0, double x1) {
 }
 
 int main() {
-    cout << biseccion(0, 3) << endl;
+    cout << bisection(0, 3) << endl;
     return 0;
 }
