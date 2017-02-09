@@ -13,12 +13,12 @@ using namespace std;
 
 //definition of function
 double isFunction(double x){
-    return (exp(x) + x);
+    return (log(x + 1) + 1);
 }
 
 //definition of derivative
 double isDerivative(double x){
-    return (exp(x) + 1);
+    return (1 / (x + 1));
 }
 
 //NewtonRaphson method
@@ -57,12 +57,14 @@ double newtonRaphson(double x0){
 
         //If x1 is not a root, x0 is now the value of x1
         x0 = x1;
-
+        cout << "n of Iterations: " << i << " Approximation: " << x1 << endl;
         i++;
     }while(i < ITER);
+
+
 }
 
 int main(){
-    cout << newtonRaphson(-10) << endl;
+    cout << newtonRaphson(-0.9) << endl;
     return 0;
 }
