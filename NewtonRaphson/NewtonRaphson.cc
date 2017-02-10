@@ -5,7 +5,7 @@
 #include <cmath>
 
 //defining number of iterations and minimal error possible
-#define ITER 1000000
+#define ITER 10
 #define ERROR 1E-15
 
 //namespace std
@@ -13,12 +13,12 @@ using namespace std;
 
 //definition of function
 double isFunction(double x){
-    return (pow(x,2));
+    return (log(x + 1) + 1);
 }
 
 //definition of derivative
 double isDerivative(double x){
-    return (2 * x);
+    return (1 / (x + 1));
 }
 
 //NewtonRaphson method
@@ -65,6 +65,6 @@ double newtonRaphson(double x0){
 }
 
 int main(){
-    cout << newtonRaphson(0) << endl;
+    cout << newtonRaphson(-0.01) << endl;
     return 0;
 }
