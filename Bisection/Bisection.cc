@@ -6,7 +6,7 @@
 
 //defining number of iterations and minimal error possible
 #define ITER 1000
-#define ERROR 1E-15
+#define ERROR 1E-3
 
 //namespace std
 using namespace std;
@@ -18,14 +18,13 @@ bool sameSign(double x, double y) {
 
 //definition of function
 double isFunction(double x) {
-    return (pow(x,3) + 5*x - 10);
+    return (log(pow(x,2) + 1) - exp(x / 2) * cos(3.1416 * x));
 }
 
 //bisection method
 double bisection(double x0, double x1) {
     double y0 = isFunction(x0); //Evaluating values in function
     double y1 = isFunction(x1);
-
     if (sameSign(y0, y1)) { //If those evaluations are of the same sign, error
         cout << "Invalid argument" << endl;
         return 0;
@@ -56,12 +55,21 @@ double bisection(double x0, double x1) {
               x1 = x;
               y1 = y;
         }
+        cout << "n of Iterations: " << i << " Approximation: "<< x << endl;
         i++;
     }
     return x;
 }
 
 int main() {
-    cout << bisection(0, 3) << endl;
+    float x0, x1;
+    cout << "Introduzca x0: ";
+    cin >> x0;
+    cout << "Introduzca x1: ";
+    cin >> x1;
+    cout << bisection(x0, x1) << endl;
+    //cout << bisection(0, 1) << endl;
+    //cout << bisection(0, 3) << endl;
+    //cout << bisection(0, 4) << endl;
     return 0;
 }
