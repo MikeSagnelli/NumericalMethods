@@ -11,3 +11,16 @@ class will be saved.
 
 A numerical method is a way of solving math problems with programmable
 arithmetic formulas.
+*****
+
+### Methods included:
+
+## Solving roots of a function
+* Bisection
+* Newton-Raphson
+* Secant
+* Bairstow
+## Solving a system of equations
+* Cramer
+* Gauss-Seidel
+* Jacobi

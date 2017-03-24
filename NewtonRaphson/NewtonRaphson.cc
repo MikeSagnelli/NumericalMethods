@@ -27,6 +27,7 @@ double newtonRaphson(double x0){
     double x1,
            xFunction,
            x1Function,
+           eAbsoluto,
            xDerivative;
 
     //iterator
@@ -50,8 +51,10 @@ double newtonRaphson(double x0){
         //Define f(x1)
         x1Function = isFunction(x1);
 
+        eAbsoluto = fabs(x1 - x0);
+
         //Check if x1 is a root
-        if(abs(x1Function) <= ERROR){
+        if(eAbsoluto <= ERROR){
             return x1;
         }
 

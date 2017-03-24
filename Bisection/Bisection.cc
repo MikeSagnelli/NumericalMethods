@@ -25,6 +25,9 @@ double isFunction(double x) {
 double bisection(double x0, double x1) {
     double y0 = isFunction(x0); //Evaluating values in function
     double y1 = isFunction(x1);
+
+    double eAbsoluto; //Evaluating absolute error
+
     if (sameSign(y0, y1)) { //If those evaluations are of the same sign, error
         cout << "Invalid argument" << endl;
         return 0;
@@ -42,7 +45,9 @@ double bisection(double x0, double x1) {
         x = (x0 + x1) / 2; //Getting the intermediate value of the interval
         y = isFunction(x);
 
-        if (abs(y) <= ERROR) { //Getting a close approximation to 0
+        eAbsoluto = fabs(y0 - y1);
+
+        if (eAbsoluto <= ERROR) { //Getting a close approximation to 0
               return x;
         }
 
