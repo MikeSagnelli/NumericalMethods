@@ -69,7 +69,7 @@ double newtonRaphson(double x0){
 
 int main(){
     float x;
-    cout << "Introduzca la aproximación: ";
+    cout << "Introduzca la aproximacion: ";
     cin >> x;
     cout << newtonRaphson(x) << endl;
     return 0;

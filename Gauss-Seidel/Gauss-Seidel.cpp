@@ -95,6 +95,11 @@ int main(){
         iterations++;
     } while( error_tolerance == false && iterations < max_iterations);
 
+    if(iterations == max_iterations){
+        cout << endl << "Metodo diverge";
+        return 1;
+    }
+
     cout << endl << "Execution ended" << endl << "Iterations: " << iterations - 1 << endl;
     for (int i = 0; i < n ; i++){
         cout << "X" << i + 1 << " approximate value = " << x[i] << endl;
@@ -102,6 +107,7 @@ int main(){
     return 1;
 }
 
+//ERROR PARCIAL2
 float get_error(float vector1[], float vector2[], int component){
     float error;
 
@@ -109,7 +115,7 @@ float get_error(float vector1[], float vector2[], int component){
     //error = fabs(vector1[component] - vector2[component]);
 
     // Relative iterative error
-    error = fabs((vector1[component] - vector2[component]) / vector1[component]);
+    error = 100 * fabs((vector1[component] - vector2[component]) / vector1[component]);
     return error;
 }
 

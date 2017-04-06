@@ -5,14 +5,15 @@
 
 //defining number of iterations and minimal error possible
 #define ITER 100
-#define ERROR 1E-5
+//ERROR PARCIAL2
+#define ERROR 0.1
 
 //namespace std
 using namespace std;
 
 //definition of function
 double isFunction(double x){
-    return (pow(x, 1.0/3));
+    return (9 * cos(4*x) * exp(-0.7*x) - 3.5);
 }
 
 //secant method
@@ -22,8 +23,7 @@ double secant(double x0, double x1){
          x1Function,
          x2,
          x2Function,
-         eAbsoluto;
-
+         ePorcentual;
 
   //iterator
   int i = 0;
@@ -49,10 +49,11 @@ double secant(double x0, double x1){
     //define f(x2)
     x2Function = isFunction(x2);
 
-    eAbsoluto = fabs(x2 - x1);
+    //ERROR PARCIAL2
+    ePorcentual = 100 * abs((x2- x1)/x2);
 
     //check if x2 is a root
-    if(eAbsoluto <= ERROR){
+    if(ePorcentual < ERROR){
         cout << "n of iterations: " << i << " approximation: ";
         return x2;
     }
