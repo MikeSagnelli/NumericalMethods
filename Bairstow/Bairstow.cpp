@@ -4,17 +4,20 @@
 
 using namespace std;
 
-struct complex {
+double error = 0.00001; //ERROR PARCIAL 2
+
+//struct to store the complex number in case of
+struct complex_number {
   double r;
   double i;
 };
 
-void syn_div(vector<double> &pol, vector<double> &res, vector<double> &aux, double r, double s) { // Check results on res
+void division(vector<double> &pol, vector<double> &res, vector<double> &aux, double r, double s) { // Check results on res
   int deg = pol.size() - 1;
   int i, j;
   for(i = deg, j = 0; i >= 0; i--, j++){
     if(i == deg){
-      res[j] = pol[j];
+      res.at(j) = pol.at(j);
     }
     else if(i == deg - 1){
       res[j] = pol[j] + res[j - 1] * r;
@@ -37,23 +40,7 @@ void syn_div(vector<double> &pol, vector<double> &res, vector<double> &aux, doub
   }
 }
 
-void quadratic(double a, double b, double c, complex *r1, complex *r2) {
-  double det = pow(b, 2) - 4 * a * c;
-  if (det < 0) {
-    r1->r = -b / 2;
-    r1->i = sqrt(-det) / 2 / a;
-    r2->r = -b / 2;
-    r2->i = -sqrt(-det) / 2 / a;
-  }
-  else {
-    r1->r = (-b + sqrt(det)) / 2 / a;
-    r1->i = 0;
-    r2->r = (-b - sqrt(det)) / 2 / a;
-    r2->i = 0;
-  }
-}
-
-void bairstow(vector<double> &pol, vector<complex*> &roots, double pi, double qi, double err) {
+void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, double qi, double err) {
   while (pol.size() > 3) {
     vector<double> res(pol.size(), 0.0);
     vector<double> aux(pol.size(), 0.0);
@@ -66,44 +53,59 @@ void bairstow(vector<double> &pol, vector<complex*> &roots, double pi, double qi
     double error_q = 1.0;
 
     do {
-      // Fill auxiliar polynomials with zeros
+      //Initialize auxiliary arrays as zero.
       for (int i = 0; i < res.size(); i++) {
         res[i] = 0;
         aux[i] = 0;
       }
 
-      syn_div(pol, res, aux, p, q);
+      division(pol, res, aux, p, q);
 
+      cout << "Result (B) array: {";
       for (int i = 0; i < res.size(); i++) {
-        cout << res[i] << " ";
+        cout << res[i];
+        if(i < res.size()-1){
+          cout << ", ";
+        }
       }
-      cout << endl;
+      cout << "}" << endl;
 
       int deg = pol.size() - 1;
       double d = aux[deg - 2] * aux[deg - 2] - aux[deg - 1] * aux[deg - 3];
       dp = (-res[deg - 1] * aux[deg - 2] + res[deg] * aux[deg - 3]) / d;
       dq = (-aux[deg - 2] * res[deg] + aux[deg - 1] * res[deg - 1]) / d;
 
-      error_p = dp / p ;//errror porcentual * 100
-      error_q = dq / q;//errror porcentual * 100
+      error_p = dp / p; //ERROR PARCIAL 2
+      error_q = dq / q; //ERROR PARCIAL 2
       p += dp;
       q += dq;
-    } while (abs(error_p) > err && abs(error_q) > err); // error  relativo
+    } while (abs(error_p) > err && abs(error_q) > err); //ERROR PARCIAL 2
 
     cout << endl;
     // 2 Roots
     double det = pow(p, 2) + 4 * q;
 
-    complex *r1 = new complex;
-    complex *r2 = new complex;
-    quadratic(1.0, -p, -q, r1, r2);
+    complex_number *r1 = new complex_number;
+    complex_number *r2 = new complex_number;
+    if (det < 0) {
+      r1->r = p / 2;
+      r1->i = sqrt(-det) / 2;
+      r2->r = p / 2;
+      r2->i = -sqrt(-det) / 2;
+    }
+    else {
+      r1->r = (p + sqrt(det)) / 2;
+      r1->i = 0;
+      r2->r = (p - sqrt(det)) / 2;
+      r2->i = 0;
+    }
     roots.push_back(r1);
     roots.push_back(r2);
 
     res = vector<double>(pol.size(), 0.0);
     aux = vector<double>(pol.size(), 0.0);
 
-    syn_div(pol, res, aux, p, q);
+    division(pol, res, aux, p, q);
 
     // Adjust polynomial
     for (int i = 0; i < pol.size() - 2; i++) {
@@ -113,48 +115,76 @@ void bairstow(vector<double> &pol, vector<complex*> &roots, double pi, double qi
     pol.pop_back();
 
 
-    cout << "NEW POLYNOMIAL" << endl;
+    cout << "Polynomial Update" << endl << "------------------------------" << endl;
+    cout << "{";
     for (int i = 0; i < pol.size(); i++) {
-      cout << pol[i] << " ";
+      cout << pol[i];
+      if(i < pol.size()-1){
+        cout << ", ";
+      }
     }
+    cout << "}" << endl;
   }
 
+
   if (pol.size() == 3) {
-    complex *r1 = new complex;
-    complex *r2 = new complex;
-    quadratic(pol[0], pol[1], pol[2], r1, r2);
+    int p = -pol[1];
+    int q = -pol[2];
+    double det = pow(p, 2) + 4 * q;
+
+    complex_number *r1 = new complex_number;
+    complex_number *r2 = new complex_number;
+    if (det < 0) {
+      r1->r = p / 2;
+      r1->i = sqrt(-det) / 2;
+      r2->r = p / 2;
+      r2->i = -sqrt(-det) / 2;
+    }
+    else {
+      r1->r = (p + sqrt(det)) / 2;
+      r1->i = 0;
+      r2->r = (p - sqrt(det)) / 2;
+      r2->i = 0;
+    }
     roots.push_back(r1);
     roots.push_back(r2);
   }
   else if (pol.size() == 2) {
-    complex *r = new complex;
+    complex_number *r = new complex_number;
     r->r = -pol[1] / pol[0];
     r->i = 0;
     roots.push_back(r);
   }
 }
 
-int main() {
-  vector<double> pol(5,0);
-  pol[0] = 8;
-  pol[1] = 3;
-  pol[2] = 5;
-  pol[3] = 4;
-  pol[4] = 1;
-  vector<complex*> roots;
-  double p = -1;
-  double q = -1;
-  cout << "ORIGINAL POLYNOMIAL" << endl;
-  for(int i = 0; i < pol.size(); i++) {
-    cout << pol[i] << " ";
+//Array must be in inverse order, where poly_array will be ordered as x^max_degree, ... , x^0.
+//g(x) = 0.7 x^3 - 4x^2 + 6.2x - 2
+int main(){
+  double poly_array[] = {1,3,-2,-10,-12,0};
+  vector<double> poly (poly_array, poly_array + sizeof(poly_array) / sizeof(double));
+  vector<complex_number*> roots;
+  double r = -1;
+  double s = -1;
+  cout << "Original Polynomial" << endl << "------------------------------" << endl;
+  cout << "{";
+  for(int i = 0; i < poly.size(); i++) {
+    cout << poly[i];
+    if(i < poly.size()-1){
+      cout << ", ";
+    }
   }
-  cout << endl;
+  cout << "}" << endl;
 
-  cout << endl << "BAIRSTOW" << endl;
-  bairstow(pol, roots, p, q, 1e-4);
+  cout << endl << "Bairstow" << endl << "------------------------------" << endl;
+  bairstow(poly, roots, r, s, error);
 
-  cout << endl << endl << "ROOTS" << endl;
+  cout << endl << endl << "Roots" << endl << "------------------------------" << endl;
   for (int i = 0; i < roots.size(); i++) {
-    cout << roots[i]->r << " + " << roots[i]->i << "i" << endl;
+    if(roots[i]->i != 0){
+      cout << roots[i]->r << " + " << roots[i]->i << "i" << endl;
+    }
+    else{
+        cout << roots[i]->r << endl;
+    }
   }
 }
