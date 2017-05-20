@@ -4,7 +4,7 @@
 
 using namespace std;
 
-double error = 0.00001; //ERROR PARCIAL 2
+double error = 1.0; //ERROR FINAL
 
 //struct to store the complex number in case of
 struct complex_number {
@@ -75,11 +75,11 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
       dp = (-res[deg - 1] * aux[deg - 2] + res[deg] * aux[deg - 3]) / d;
       dq = (-aux[deg - 2] * res[deg] + aux[deg - 1] * res[deg - 1]) / d;
 
-      error_p = dp / p; //ERROR PARCIAL 2
-      error_q = dq / q; //ERROR PARCIAL 2
+      error_p = (dp / p)*100; //ERROR FINAL
+      error_q = (dq / q)*100; //ERROR FINAL
       p += dp;
       q += dq;
-    } while (abs(error_p) > err && abs(error_q) > err); //ERROR PARCIAL 2
+    } while (abs(error_p) > err && abs(error_q) > err); //ERROR FINAL
 
     cout << endl;
     // 2 Roots
@@ -126,24 +126,27 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
     cout << "}" << endl;
   }
 
-
   if (pol.size() == 3) {
-    int p = -pol[1];
-    int q = -pol[2];
-    double det = pow(p, 2) + 4 * q;
+	double a = pol[0];
+    double b = pol[1];
+    double c = pol[2];
+    double det = pow(b, 2) - (4 * a * c);
+	cout << "a = " << a << endl;
+	cout << "b = " << b << endl;
+	cout << "c = " << c << endl;
 
     complex_number *r1 = new complex_number;
     complex_number *r2 = new complex_number;
     if (det < 0) {
-      r1->r = p / 2;
-      r1->i = sqrt(-det) / 2;
-      r2->r = p / 2;
-      r2->i = -sqrt(-det) / 2;
+      r1->r = -b / 2 / a;
+      r1->i = sqrt(-det) / 2 / a;
+      r2->r = -b / 2 / a;
+      r2->i = -sqrt(-det) / 2 / a;
     }
     else {
-      r1->r = (p + sqrt(det)) / 2;
+      r1->r = (-b + sqrt(det)) / (2*a);
       r1->i = 0;
-      r2->r = (p - sqrt(det)) / 2;
+      r2->r = (- b - sqrt(det)) / (2*a);
       r2->i = 0;
     }
     roots.push_back(r1);
@@ -160,11 +163,12 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
 //Array must be in inverse order, where poly_array will be ordered as x^max_degree, ... , x^0.
 //g(x) = 0.7 x^3 - 4x^2 + 6.2x - 2
 int main(){
-  double poly_array[] = {1,3,-2,-10,-12,0};
+  //double poly_array[] = {0.7,-4,6.2,-2};
+  double poly_array[] = {4,0,4,0,-1};
   vector<double> poly (poly_array, poly_array + sizeof(poly_array) / sizeof(double));
   vector<complex_number*> roots;
-  double r = -1;
-  double s = -1;
+  double r = 1;
+  double s = 1;
   cout << "Original Polynomial" << endl << "------------------------------" << endl;
   cout << "{";
   for(int i = 0; i < poly.size(); i++) {

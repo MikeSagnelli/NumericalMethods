@@ -1,3 +1,7 @@
+//Definicion de matriz del sistema de ecuaciones
+A = [4,12,6,8;-8,-6,-9,6;6,5,-4,5;-10,5,3,6]
+//Definicion de matriz de valores independientes
+B = [-8;-3;-13;-14]
 //Calcular el determinante del sistema de ecuaciones
 dS = det(A);
 //Utilizado para conocer el número de incógnitas a calcular

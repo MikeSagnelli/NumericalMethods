@@ -4,8 +4,8 @@
 *****
 ### Repository's purpose
 
-This is a repository where all of my C++ programs done in the Numerical Methods
-class will be saved.
+This is a repository where all of my C++, and scilab programs done in the
+Numerical Methods class will be saved.
 *****
 ### What is a numerical method?
 
@@ -24,3 +24,19 @@ arithmetic formulas.
 * Cramer
 * Gauss-Seidel
 * Jacobi
+* Gauss-Jordan
+* Gauss-Elimination
+## Interpolation
+* Lineal
+* LaGrange
+* Newton
+## Lineal Regression
+* Min Squares
+* Exponential
+* Potential
+* Polynomial
+## Numerical integration
+* Riemman Sums
+* Trapezoid Rule
+* Romberg
+* Simpson

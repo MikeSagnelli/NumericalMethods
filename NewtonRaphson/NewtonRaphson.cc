@@ -6,19 +6,19 @@
 
 //defining number of iterations and minimal error possible
 #define ITER 1000
-#define ERROR 1E-5
+#define ERROR 1.0
 
 //namespace std
 using namespace std;
 
 //definition of function
 double isFunction(double x){
-    return (cos(3 * x) - x);
+    return (4*pow(x,4) + 4*pow(x,2) - 1);
 }
 
 //definition of derivative
 double isDerivative(double x){
-    return (-3 * sin(3 * x) - 1);
+    return (8*(2*pow(x,3) + x));
 }
 
 //NewtonRaphson method
@@ -27,7 +27,7 @@ double newtonRaphson(double x0){
     double x1,
            xFunction,
            x1Function,
-           eAbsoluto,
+           ePorcentual,
            xDerivative;
 
     //iterator
@@ -39,9 +39,9 @@ double newtonRaphson(double x0){
         xFunction = isFunction(x0);
 
         //Check if x0 is already a root
-        if(abs(xFunction) <= ERROR){
+        /*if(abs(xFunction) <= ERROR/100){
             return x0;
-        }
+        }*/
 
         //Define f'(x0)
         xDerivative = isDerivative(x0);
@@ -51,10 +51,10 @@ double newtonRaphson(double x0){
         //Define f(x1)
         x1Function = isFunction(x1);
 
-        eAbsoluto = fabs(x1 - x0);
+        ePorcentual = fabs((x1 - x0)/x1) * 100;
 
         //Check if x1 is a root
-        if(eAbsoluto <= ERROR){
+        if(ePorcentual < ERROR){
             return x1;
         }
 

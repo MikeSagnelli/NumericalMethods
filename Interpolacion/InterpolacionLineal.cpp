@@ -5,9 +5,14 @@
 
 using namespace std;
 
+double errorAbsoluto (double real, double aprox){
+  double error;
+  return error = fabs(real - aprox);
+}
+
 int main(){
-    float x1, x2, y1, y2, x, y;
-    //Definición de puntos
+    double x1, x2, y1, y2, x, y;
+    //Definiciï¿½n de puntos
     cout << "Punto 1 x: "; cin >> x1;
     cout << "Punto 1 y: "; cin >> y1;
     cout << "Punto 2 x: "; cin >> x2;
@@ -16,7 +21,9 @@ int main(){
 
     y = y1 + (((y2-y1)*(x-x1))/(x2-x1));
 
+    cout << "y = " << y1 << " + " << y2 - y1 << " * (x - " << x1 << ") / " << x2-x1 << endl;
     cout << "Aproximacion de y: " << y << endl;
+    cout << "Error absoluto: " << errorAbsoluto(7.986, y) << endl;
 
     return 0;
 }

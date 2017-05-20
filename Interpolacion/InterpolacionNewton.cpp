@@ -11,6 +11,11 @@ double finite_dif(double xi, double xj, double yi, double yj){
     return ((yi - yj) / (xi - xj));
 }
 
+double errorAbsoluto(double real, double aprox){
+  double error;
+  return error = fabs(real - aprox);
+}
+
 void newton_interpolation(vector<double> &X, vector<double> &Y, int n, double x){
     double T[n-1], B[n-1];
 
@@ -41,8 +46,13 @@ void newton_interpolation(vector<double> &X, vector<double> &Y, int n, double x)
     }
 
     cout << "f("<< x <<") = " << yr << endl;
+    cout << errorAbsoluto(7.986, yr)<< endl;
 }
 
+/* For inverse interpolation, run Newton interpolation and solve
+   for y instead of x by substituing y for the x value. We can use any other
+   method for solving this.
+*/
 int main(){
     int nPoints = 0;
     int degree;
@@ -66,7 +76,9 @@ int main(){
         file_x.close();
         file_y.close();
 
+        nPoints--;
         degree = nPoints - 1;
+        cout << degree << endl;
 
         double x;
         cout << "Give me a value x: ";
@@ -81,4 +93,3 @@ int main(){
 
     return 0;
 }
-
